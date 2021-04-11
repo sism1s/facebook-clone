@@ -30,19 +30,19 @@ function Header() {
       </div>
       <div className="header__middle">
         <div className="header__option header__option--active">
-          <HomeIcon fontSize="Large" />
+          <HomeIcon fontSize="large" />
         </div>
         <div className="header__option">
-          <FlagIcon fontSize="Large" />
+          <FlagIcon fontSize="large" />
         </div>
         <div className="header__option">
-          <SubscriptionOutlinedIcon fontSize="Large" />
+          <SubscriptionOutlinedIcon fontSize="large" />
         </div>
         <div className="header__option">
-          <StorefrontOutlinedIcon fontSize="Large" />
+          <StorefrontOutlinedIcon fontSize="large" />
         </div>
         <div className="header__option">
-          <SupervisedUserCircleIcon fontSize="Large" />
+          <SupervisedUserCircleIcon fontSize="large" />
         </div>
       </div>
       <div className="header__right">

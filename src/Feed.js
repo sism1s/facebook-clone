@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Feed.css";
 import MessageSender from "./MessageSender";
 import Post from "./Post";
@@ -9,14 +9,16 @@ function Feed() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    db.collection("posts").onSnapshot((snapshot) =>
-      setPosts(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
-      )
-    );
+    db.collection("posts")
+      .orderBy("timestamps", "desc")
+      .onSnapshot((snapshot) =>
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
   }, []);
 
   return (
@@ -24,20 +26,16 @@ function Feed() {
       <StoryReel />
       <MessageSender />
 
-      <Post
-        profilePic="https://scontent.fgba1-1.fna.fbcdn.net/v/t1.6435-9/142675490_10221219403607914_5256002304997073390_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=AKCIdcwsPA4AX8Zo6YH&_nc_ht=scontent.fgba1-1.fna&oh=246705662615d5943d6374da6a3c5af0&oe=60956685"
-        message="Hellou, test test. Facebook wou"
-        timestamp="This is a timestamp"
-        username="Marko"
-        image="https://miro.medium.com/max/11520/0*Jy3heMl_yP_fQwMO"
-      />
-
-      <Post
-        profilePic="https://scontent.fgba1-1.fna.fbcdn.net/v/t1.6435-9/142675490_10221219403607914_5256002304997073390_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=AKCIdcwsPA4AX8Zo6YH&_nc_ht=scontent.fgba1-1.fna&oh=246705662615d5943d6374da6a3c5af0&oe=60956685"
-        message="Hellou, test2 test2. Facebook wou"
-        timestamp="This is a timestamp"
-        username="Marko"
-      />
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          profilePic={post.data.profilePic}
+          message={post.data.message}
+          timestamp={post.data.timestamps}
+          username={post.data.username}
+          image={post.data.image}
+        />
+      ))}
     </div>
   );
 }
