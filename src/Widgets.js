@@ -8,7 +8,7 @@ function Widgets() {
         class="fb-page"
         data-href="https://www.facebook.com/RealMadrid/"
         data-tabs="timeline"
-        data-width="360px"
+        data-width="340px"
         data-height="1500px"
         data-small-header="false"
         data-adapt-container-width="true"
