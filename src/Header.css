@@ -70,12 +70,12 @@
   border-bottom: none;
 }
 
-.header__info {
-  display: flex;
-  align-items: center;
+.header__info > button {
+  text-transform: none;
+  font-size: medium;
 }
 
-.header__info > h4 {
+.header__info--user {
   margin-left: 10px;
 }
 
