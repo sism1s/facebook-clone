@@ -1,3 +1,54 @@
 .messenger {
   background: white;
+  text-align: center;
+}
+
+.messenger__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.messenger__headerLink {
+  align-self: flex-start;
+}
+
+.messenger__headerLink > img {
+  height: 150px;
+  object-fit: contain;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.messenger__header > div {
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+.messenger__header > div > img {
+  height: 150px;
+  object-fit: contain;
+}
+
+.messenger__form {
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  background-color: #e9e9eb;
+  width: 95.8%;
+  margin: 20px;
+}
+
+.messenger__formControl {
+  display: flex !important;
+  flex-direction: row !important;
+  padding-right: 20px !important;
+}
+
+.message__iconButton {
+  flex: 0;
+}
+
+.message__input {
+  flex: 1;
 }

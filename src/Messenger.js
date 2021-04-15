@@ -5,6 +5,10 @@ import Message from "./Message";
 import "./Messenger.css";
 import { useStateValue } from "./StateProvier";
 import firebase from "firebase";
+import FlipMove from "react-flip-move";
+import SendIcon from "@material-ui/icons/Send";
+import { IconButton } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 function Messenger() {
   const [{ user }, dispatch] = useStateValue();
@@ -15,7 +19,9 @@ function Messenger() {
     db.collection("messages")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
-        setMessages(snapshot.docs.map((doc) => doc.data()));
+        setMessages(
+          snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
+        );
       });
   }, []);
 
@@ -23,6 +29,7 @@ function Messenger() {
     event.preventDefault();
     db.collection("messages").add({
       message: input,
+      profilePic: user.photoURL,
       username: user.displayName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
@@ -30,31 +37,59 @@ function Messenger() {
     setInput("");
   };
 
+  console.log(messages);
+
   return (
     <div className="messenger">
-      <form>
-        <FormControl>
+      <div className="messenger__header">
+        <Link to="/" className="messenger__headerLink">
+          <img
+            src="https://logos-world.net/wp-content/uploads/2020/04/Facebook-Logo.png"
+            alt=""
+          />
+        </Link>
+
+        <div>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Facebook_Messenger_logo_2018.svg/1200px-Facebook_Messenger_logo_2018.svg.png"
+            alt=""
+          />
+          <h2>Welcome {user.displayName}</h2>
+        </div>
+      </div>
+
+      <form className="messenger__form">
+        <FormControl className="messenger__formControl">
           <InputLabel>Enter a message...</InputLabel>
           <Input
+            className="message__input"
             value={input}
             onChange={(event) => setInput(event.target.value)}
           />
+          <IconButton
+            className="message__iconButton"
+            disabled={!input}
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={sendMessage}
+          >
+            <SendIcon />
+          </IconButton>
         </FormControl>
-
-        <Button
-          disabled={!input}
-          variant="contained"
-          color="primary"
-          type="submit"
-          onClick={sendMessage}
-        >
-          Send Message
-        </Button>
       </form>
 
-      {messages.map((message) => (
-        <Message text={message.message} username={message.username} />
-      ))}
+      <FlipMove>
+        {messages.map(({ id, message }) => (
+          <Message
+            key={id}
+            text={message.message}
+            username={message.username}
+            timestamp={message.timestamp}
+            profilePic={message.profilePic}
+          />
+        ))}
+      </FlipMove>
     </div>
   );
 }

@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -80,7 +81,10 @@ function Sidebar() {
       />
       <SidebarRow Icon={EmojiFlagsIcon} title="Pages" />
       <SidebarRow Icon={PeopleIcon} title="Friends" />
-      <SidebarRow Icon={ChatIcon} title="Messenger" />
+      <Link to="messenger" style={{ textDecoration: "none", color: "black" }}>
+        <SidebarRow Icon={ChatIcon} title="Messenger" />
+      </Link>
+
       <SidebarRow Icon={StorefrontIcon} title="Marketplace" />
       <SidebarRow Icon={VideoLibraryIcon} title="Videos" />
       <SidebarRow Icon={ExpandMoreOutlined} title="More" />
