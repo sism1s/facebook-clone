@@ -28,8 +28,8 @@
   background-color: #eff2f5;
 }
 
-.messageSender__top > form > button {
-  display: none;
+.messageSender__top > form > button:hover {
+  color: #2e81f4;
 }
 
 .messageSender__input {

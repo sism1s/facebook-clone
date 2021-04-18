@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import React from "react";
 import "./Login.css";
 import { auth, provider } from "./firebase";
 import { useStateValue } from "./StateProvier";
@@ -19,6 +18,9 @@ function Login() {
       })
       .catch((error) => alert(error.message));
   };
+
+  console.log(state);
+
   return (
     <div className="login">
       <div className="login__logo">
@@ -37,5 +39,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;

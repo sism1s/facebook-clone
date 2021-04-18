@@ -20,6 +20,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { auth } from "./firebase";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -42,9 +43,11 @@ function Header() {
   };
 
   const signOut = () => {
-    dispatch({
-      type: actionTypes.SET_USER,
-      user: null,
+    auth.signOut().then(() => {
+      dispatch({
+        type: actionTypes.SET_USER,
+        user: null,
+      });
     });
   };
 

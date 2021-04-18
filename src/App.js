@@ -1,39 +1,51 @@
 import "./App.css";
-import Feed from "./Feed";
-import Header from "./Header";
 import Login from "./Login";
-import Sidebar from "./Sidebar";
 import { useStateValue } from "./StateProvier";
-import Widgets from "./Widgets";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Messenger from "./Messenger";
+import { useEffect, useState } from "react";
+import { auth } from "./firebase";
+import { actionTypes } from "./reducer";
+import Home from "./Home";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
+  const [loading, setLoading] = useState(false);
+
+  console.log(user);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: user,
+        });
+        setLoading(false);
+      } else {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: null,
+        });
+        setLoading(true);
+      }
+    });
+  }, []);
 
   return (
     <Router>
       <div className="app">
-        <Switch>
-          <Route exact path="/">
-            {!user ? (
-              <Login />
-            ) : (
-              <>
-                <Header />
-
-                <div className="app__body">
-                  <Sidebar />
-                  <Feed />
-                  <Widgets />
-                </div>
-              </>
-            )}
-          </Route>
-          <Route exact path="/messenger">
-            <Messenger />
-          </Route>
-        </Switch>
+        {loading && <Login />}
+        {user && (
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/messenger">
+              <Messenger />
+            </Route>
+          </Switch>
+        )}
       </div>
     </Router>
   );

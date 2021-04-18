@@ -1,4 +1,4 @@
-import { Avatar } from "@material-ui/core";
+import { Avatar, IconButton } from "@material-ui/core";
 import React, { useState } from "react";
 import "./MessageSender.css";
 import VideocamIcon from "@material-ui/icons/Videocam";
@@ -7,6 +7,7 @@ import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import { useStateValue } from "./StateProvier";
 import db from "./firebase";
 import firebase from "firebase";
+import SendIcon from "@material-ui/icons/Send";
 
 function MessageSender() {
   const [{ user }, dispatch] = useStateValue();
@@ -44,9 +45,9 @@ function MessageSender() {
             placeholder="image URL(Optional)"
             onChange={(e) => setImageUrl(e.target.value)}
           />
-          <button onClick={handleSubmit} type="submit">
-            Hidden submit
-          </button>
+          <IconButton onClick={handleSubmit} type="submit">
+            <SendIcon />
+          </IconButton>
         </form>
       </div>
       <div className="messageSender__bottom">
